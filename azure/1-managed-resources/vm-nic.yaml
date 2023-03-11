@@ -1,0 +1,14 @@
+apiVersion: network.azure.upbound.io/v1beta1
+kind: NetworkInterface
+metadata:
+  name: tm-demo-1-vm-nic
+spec:
+  forProvider:
+    ipConfiguration:
+      - name: tm-demo-1-ip-config
+        privateIpAddressAllocation: Dynamic
+        subnetIdRef:
+          name: tm-demo-1-subnet
+    location: West US 3
+    resourceGroupNameRef:
+      name: tm-demo-1-rg

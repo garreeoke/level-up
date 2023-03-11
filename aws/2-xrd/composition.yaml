@@ -1,0 +1,154 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xs3buckets.demo.upbound.io
+spec:
+  writeConnectionSecretsToNamespace: default
+  compositeTypeRef:
+    apiVersion: demo.upbound.io/v1alpha1
+    kind: XS3Bucket
+  resources:
+    - base:
+        apiVersion: s3.aws.upbound.io/v1beta1
+        kind: Bucket
+        spec:
+          deletionPolicy: Delete
+          forProvider:
+            region: us-west-2
+      name: s3bucket
+      patches:
+        - fromFieldPath: spec.region
+          toFieldPath: spec.region
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.tags.Name
+    - base:
+        apiVersion: s3.aws.upbound.io/v1beta1
+        kind: BucketOwnershipControls
+        spec:
+          forProvider:
+            region: us-west-2
+      name: s3bucket-ownership
+      patches:
+        - fromFieldPath: spec.region
+          toFieldPath: spec.region
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-ownership"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.bucket
+        - fromFieldPath: spec.ownership
+          toFieldPath: spec.forProvider.rule[0].objectOwnership
+    # IAM
+    - name: s3-iam-role
+      base:
+        apiVersion: iam.aws.upbound.io/v1beta1
+        kind: Role
+        spec:
+          forProvider:
+            assumeRolePolicy: |
+              {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                          "s3.amazonaws.com"
+                      ]
+                    },
+                    "Action": "sts:AssumeRole"
+                  }
+                ]
+              }
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-s3-iam-role"
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.labels[role]
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-s3-iam-role"
+    - base:
+        apiVersion: iam.aws.upbound.io/v1beta1
+        kind: Policy
+        spec:
+          forProvider:
+            description: "Policy for s3 bucket CRUD"
+            policy: patched
+      name: s3CrudPolicy
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-s3-crud"
+        - type: CombineFromComposite
+          toFieldPath: spec.forProvider.policy
+          combine:
+            variables:
+              - fromFieldPath: spec.id
+              - fromFieldPath: spec.id
+            strategy: string
+            string:
+              fmt: |
+                {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Action": [ 
+                        "s3:ListAllMyBuckets",
+                        "s3:GetBucketLocation"
+                      ],
+                      "Resource": "*"
+                    },
+                    {
+                      "Effect":"Allow",
+                      "Action":["s3:ListBucket"],
+                      "Resource":"arn:aws:s3:::%s"
+                    },
+                    {
+                      "Effect": "Allow",
+                      "Action": [
+                        "s3:PutObject",
+                        "s3:GetObject",
+                        "s3:DeleteObject"
+                      ],
+                      "Resource": "arn:aws:s3:::%s/*"
+                    }
+                  ]
+                }
+    - base:
+        apiVersion: iam.aws.upbound.io/v1beta1
+        kind: RolePolicyAttachment
+      name: s3UserPolicyAttachment
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-s3-rpa"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.policyArnRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-s3-crud"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.roleRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-s3-iam-role"

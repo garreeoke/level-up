@@ -1,0 +1,25 @@
+apiVersion: dbforpostgresql.azure.upbound.io/v1beta1
+kind: FlexibleServer
+metadata:
+  name: tm-demo-1-postgres
+  labels:
+    tm.demo.io/app: tm-demo-1
+spec:
+  forProvider:
+    version: "14"
+    administratorLogin: psqladmin
+    administratorPasswordSecretRef:
+      name: tm-demo-1-secret
+      namespace: default
+      key: pword
+    createMode: Default
+    location: West US 3
+    skuName: B_Standard_B1ms
+    storageMb: 32768
+    delegatedSubnetIdRef:
+      name: tm-demo-1-subnet
+    resourceGroupNameRef:
+      name: tm-demo-1-rg
+  writeConnectionSecretToRef:
+    name: tm-demo-1-postgres
+    namespace: default

@@ -1,0 +1,37 @@
+apiVersion: iam.aws.upbound.io/v1beta1
+kind: Policy
+metadata:
+  name: crossplane-demo-torg-s3-crud
+  labels:
+    role: crossplane-demo-torg-s3-iam-role
+    crossplane-demo: managed-resources
+spec:
+  forProvider:
+    policy: |-
+      {
+        "Version": "2012-10-17",
+        "Statement": [
+          {
+            "Effect": "Allow",
+            "Action": [ 
+              "s3:ListAllMyBuckets",
+              "s3:GetBucketLocation"
+            ],
+            "Resource": "*"
+          },
+          {
+            "Effect":"Allow",
+            "Action":["s3:ListBucket"],
+            "Resource":"arn:aws:s3:::crossplane-demo-torg"
+          },
+          {
+            "Effect": "Allow",
+            "Action": [
+              "s3:PutObject",
+              "s3:GetObject",
+              "s3:DeleteObject"
+            ],
+            "Resource": "arn:aws:s3:::crossplane-demo-torg/*"
+          }
+        ]
+      }

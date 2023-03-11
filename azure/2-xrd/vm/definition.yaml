@@ -1,0 +1,37 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xvirtualmachines.demo.tm.io
+spec:
+  group: demo.tm.io
+  names:
+    kind: XVirtualMachine
+    plural: xvirtualmachines
+  claimNames:
+    kind: VirtualMachine
+    plural: virtualmachines
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          description: "Create resources for demo landing zone for TechMahindra"
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: "base id prefix for all managed resources"
+                location:
+                  type: string
+                  description: location
+                resourceGroup:
+                  type: string
+                  description: azure resource group
+              required:
+                - id
+                - location
+                - resourceGroup

@@ -1,0 +1,199 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xvirtualmachines.demo.tm.io
+spec:
+  writeConnectionSecretsToNamespace: default
+  compositeTypeRef:
+    apiVersion: demo.tm.io/v1alpha1
+    kind: XVirtualMachine
+  patchSets:
+    - name: common
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.labels[demo.tm.io/option]
+        - fromFieldPath: spec.location
+          toFieldPath: spec.forProvider.location
+        - fromFieldPath: spec.resourceGroup
+          toFieldPath: spec.forProvider.resourceGroupName
+  resources:
+    - name: virtualNetwork
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: VirtualNetwork
+        spec:
+          forProvider:
+            addressSpace:
+              - 192.168.0.0/16
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-vnet"
+    - name: subnet
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: Subnet
+        spec:
+          forProvider:
+            addressPrefixes:
+              - 192.168.1.0/24
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-subnet"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.virtualNetworkNameRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-vnet"
+    - name: securityGroup
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: SecurityGroup
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-secgrp"
+    - name: networkSecurityGroupAssociation
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: SubnetNetworkSecurityGroupAssociation
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-netsecgrp"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.networkSecurityGroupIdRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-secgrp"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.subnetIdRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-subnet"
+    - name: k8Secret
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          managementPolicy: ObserveCreateUpdate
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Secret
+              type: Opaque
+              metadata:
+                namespace: default
+              data:
+                pword: VG1kZW1vMUAwQDMK #Tmdemo1@0@3
+          providerConfigRef:
+            name: kubernetes-provider
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-obj"
+        - fromFieldPath: spec.id
+          toFieldPath: forProvider.manifest.metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-obj"
+    - name: linuxVirtualMachine
+      base:
+        apiVersion: compute.azure.upbound.io/v1beta1
+        kind: LinuxVirtualMachine
+        spec:
+          forProvider:
+            adminUsername: adminuser
+            disablePasswordAuthentication: false
+            adminPasswordSecretRef:
+              namespace: default
+              key: pword
+            osDisk:
+              - caching: ReadWrite
+                storageAccountType: Standard_LRS
+            size: Standard_B1s
+            sourceImageReference:
+              - offer: UbuntuServer
+                publisher: Canonical
+                sku: 16.04-LTS
+                version: latest
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-vm"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.networkInterfaceIdsRefs[0].name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-vm-nic"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.adminPasswordSecretRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-obj"
+    - name: virtualMachineNetworkInterface
+      base:
+        apiVersion: network.azure.upbound.io/v1beta1
+        kind: NetworkInterface
+        spec:
+          forProvider:
+            ipConfiguration:
+              - privateIpAddressAllocation: Dynamic
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-vm-nic"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.ipConfiguration[0].name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-ip-config"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.ipConfiguration[0].subnetIdRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-subnet"

@@ -1,0 +1,90 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xdatabase-postgres.demo.tm.io
+  labels:
+    demo.tm.io/option: postgres
+spec:
+  writeConnectionSecretsToNamespace: default
+  compositeTypeRef:
+    apiVersion: demo.tm.io/v1alpha1
+    kind: XDataBase
+  patchSets:
+    - name: common
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.labels[demo.tm.io/landingzone]
+        - fromFieldPath: spec.location
+          toFieldPath: spec.forProvider.location
+        - fromFieldPath: spec.resourceGroup
+          toFieldPath: spec.forProvider.resourceGroupName
+  resources:
+    - name: k8Secret
+      base:
+        apiVersion: kubernetes.crossplane.io/v1alpha1
+        kind: Object
+        spec:
+          managementPolicy: ObserveCreateUpdate
+          forProvider:
+            manifest:
+              apiVersion: v1
+              kind: Secret
+              type: Opaque
+              metadata:
+                namespace: default
+              data:
+                pword: VG1kZW1vMUAwQDMK #Tmdemo1@0@3
+          providerConfigRef:
+            name: kubernetes-provider
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-obj-postgres"
+        - fromFieldPath: spec.id
+          toFieldPath: forProvider.manifest.metadata.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-obj-postgres"
+    - name: postgresDB
+      base:
+        apiVersion: dbforpostgresql.azure.upbound.io/v1beta1
+        kind: FlexibleServer
+        spec:
+          forProvider:
+            version: "14"
+            administratorLogin: psqladmin
+            administratorPasswordSecretRef:
+              namespace: default
+              key: pword
+            createMode: Default
+            skuName: B_Standard_B1ms
+            storageMb: 32768
+          writeConnectionSecretToRef:
+            namespace: default
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.resourceGroupNameRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-rg"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.forProvider.administratorPasswordSecretRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-obj-postgres"
+        - fromFieldPath: spec.id
+          toFieldPath: spec.writeConnectionSecretToRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-postgres-con"

@@ -1,0 +1,37 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xs3buckets.demo.upbound.io
+spec:
+  group: demo.upbound.io
+  names:
+    kind: XS3Bucket
+    plural: xs3buckets
+  claimNames:
+    kind: S3Bucket
+    plural: s3buckets
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          description: "Create s3 bucket with ownership preferred and new role, policy and attachment"
+          type: object
+          properties:
+            spec:
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: "id/name"
+                region:
+                  type: string
+                  description: Region
+                ownership:
+                  type: string
+                  description: "Ownership of bucket BucketOwnerPreferred ObjectWriter or BucketOwnerEnforced"
+              required:
+                - id
+                - region
+                - ownership

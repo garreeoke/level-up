@@ -1,0 +1,12 @@
+apiVersion: network.azure.upbound.io/v1beta1
+kind: SubnetNetworkSecurityGroupAssociation
+metadata:
+  name: tm-demo-1-netsecgrp
+  labels:
+    demo.tm.io/landingzone: tm-demo-1
+spec:
+  forProvider:
+    networkSecurityGroupIdRef:
+      name: tm-demo-1-secgrp
+    subnetIdRef:
+      name: tm-demo-1-subnet

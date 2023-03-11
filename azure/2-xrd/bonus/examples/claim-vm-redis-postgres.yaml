@@ -1,0 +1,12 @@
+apiVersion: demo.tm.io/v1alpha1
+kind: VmDbCombo
+metadata:
+  name: tm-demo-1
+  namespace: default
+spec:
+  id: tm-demo-1
+  location: "West US 3"
+  resourceGroup: tm-demo-1-rg
+  compositionSelector:
+    matchLabels:
+      demo.tm.io/option: vm-redis-postgres

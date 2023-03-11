@@ -1,0 +1,9 @@
+apiVersion: azure.upbound.io/v1beta1
+kind: ResourceGroup
+metadata:
+  name: tm-demo-1-rg
+  labels:
+    demo.tm.io/landingzone: tm-demo-1
+spec:
+  forProvider:
+    location: West US 3

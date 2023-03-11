@@ -1,0 +1,14 @@
+apiVersion: dbforpostgresql.azure.upbound.io/v1beta1
+kind: VirtualNetworkRule
+metadata:
+  name: tm-demo-1-db-vnet-rule
+  labels:
+    tm.demo.io/app: tm-demo-1
+spec:
+  forProvider:
+    serverNameRef:
+      name: tm-demo-1-postgres
+    resourceGroupNameRef:
+      name: tm-demo-1-rg
+    subnetIdRef:
+      name: tm-demo-1-subnet

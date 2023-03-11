@@ -1,0 +1,16 @@
+apiVersion: network.azure.upbound.io/v1beta1
+kind: Subnet
+metadata:
+  name: tm-demo-1-subnet
+  labels:
+    demo.tm.io/landingzone: tm-demo-1
+spec:
+  forProvider:
+    resourceGroupNameRef:
+      name: tm-demo-1-rg
+    virtualNetworkNameRef:
+      name: tm-demo-1-vnet
+    addressPrefixes:
+      - 192.168.1.0/24
+    serviceEndpoints:
+      - Microsoft.Sql

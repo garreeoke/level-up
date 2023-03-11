@@ -1,0 +1,48 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: xdatabase-redis.demo.tm.io
+  labels:
+    demo.tm.io/option: redis
+spec:
+  writeConnectionSecretsToNamespace: default
+  compositeTypeRef:
+    apiVersion: demo.tm.io/v1alpha1
+    kind: XDataBase
+  patchSets:
+    - name: common
+      patches:
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.labels[demo.tm.io/option]
+        - fromFieldPath: spec.location
+          toFieldPath: spec.forProvider.location
+        - fromFieldPath: spec.resourceGroup
+          toFieldPath: spec.forProvider.resourceGroupName
+  resources:
+    - name: redisCache
+      base:
+        apiVersion: cache.azure.upbound.io/v1beta1
+        kind: RedisCache
+        metadata:
+        spec:
+          forProvider:
+            capacity: 1
+            family: P
+            minimumTlsVersion: "1.2"
+            redisConfiguration:
+              - { }
+            redisVersion: "6"
+            skuName: Premium
+          writeConnectionSecretToRef:
+            namespace: crossplane-system
+      patches:
+        - type: PatchSet
+          patchSetName: common
+        - fromFieldPath: spec.id
+          toFieldPath: metadata.name
+        - fromFieldPath: spec.id
+          toFieldPath: spec.writeConnectionSecretToRef.name
+          transforms:
+            - type: string
+              string:
+                fmt: "%s-redis-conn"

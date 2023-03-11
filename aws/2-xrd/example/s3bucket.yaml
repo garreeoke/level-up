@@ -1,0 +1,9 @@
+apiVersion: demo.upbound.io/v1alpha1
+kind: S3Bucket
+metadata:
+  name: crossplane-demo-torg-xrd
+  namespace: default
+spec:
+  id: crossplane-demo-torg-xrd
+  region: "us-west-2"
+  ownership: "BucketOwnerPreferred"

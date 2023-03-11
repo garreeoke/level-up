@@ -1,0 +1,13 @@
+apiVersion: network.azure.upbound.io/v1beta1
+kind: VirtualNetwork
+metadata:
+  name: tm-demo-1-vnet
+  labels:
+    demo.tm.io/landingzone: tm-demo-1
+spec:
+  forProvider:
+    resourceGroupNameRef:
+      name: tm-demo-1-rg
+    location: West US 3
+    addressSpace:
+      - 192.168.0.0/16

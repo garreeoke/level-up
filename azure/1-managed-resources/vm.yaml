@@ -1,0 +1,28 @@
+apiVersion: compute.azure.upbound.io/v1beta1
+kind: LinuxVirtualMachine
+metadata:
+  name: tm-demo-1-vm
+  labels:
+    demo.tm.io/landingzone: tm-demo-1
+spec:
+  forProvider:
+    adminUsername: adminuser
+    disablePasswordAuthentication: false
+    adminPasswordSecretRef:
+      name: tm-demo-1-secret
+      namespace: default
+      key: pword
+    location: West US 3
+    networkInterfaceIdsRefs:
+      - name: tm-demo-1-vm-nic
+    osDisk:
+      - caching: ReadWrite
+        storageAccountType: Standard_LRS
+    resourceGroupNameRef:
+      name: tm-demo-1-rg
+    size: Standard_B1s
+    sourceImageReference:
+      - offer: UbuntuServer
+        publisher: Canonical
+        sku: 16.04-LTS
+        version: latest

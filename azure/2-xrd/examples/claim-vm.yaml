@@ -1,0 +1,9 @@
+apiVersion: demo.tm.io/v1alpha1
+kind: VirtualMachine
+metadata:
+  name: tm-demo-1
+  namespace: default
+spec:
+  id: tm-demo-1
+  location: "West US 3"
+  resourceGroup: tm-demo-1-rg

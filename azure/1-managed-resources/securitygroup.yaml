@@ -1,0 +1,11 @@
+apiVersion: network.azure.upbound.io/v1beta1
+kind: SecurityGroup
+metadata:
+  name: tm-demo-1-secgrp
+  labels:
+    demo.tm.io/landingzone: tm-demo-1
+spec:
+  forProvider:
+    location: West US 3
+    resourceGroupNameRef:
+      name: tm-demo-1-rg

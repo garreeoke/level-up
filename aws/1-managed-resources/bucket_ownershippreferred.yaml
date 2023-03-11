@@ -1,0 +1,12 @@
+apiVersion: s3.aws.upbound.io/v1beta1
+kind: BucketOwnershipControls
+metadata:
+  name: crossplane-demo-torg-ownership
+  labels:
+    crossplane-demo: managed-resources
+spec:
+  forProvider:
+    bucket: crossplane-demo-torg
+    region: us-west-2
+    rule:
+      - objectOwnership: BucketOwnerPreferred
