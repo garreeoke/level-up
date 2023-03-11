@@ -1,5 +1,8 @@
 # Level Up - A Hands on Crossplane Workshop
 
+Initially created for Level UP workshop in Sydney Australia.
+
+## Info
 There are three folders in this repo
 
 * **aws** - Config to use for AWS exercises
