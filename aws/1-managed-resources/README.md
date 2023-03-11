@@ -11,13 +11,12 @@ This is a very basic approach to using Managed resources in Crossplane. It uses 
 provider and not within a composition.
 
 ## Steps
-1. Follow [setup](../README.md)
-2. In each file in the folder, search and replace the word **torg** and replace with your own name.
-3. Apply manifests in the folder:
+1. In each file in the folder, search and replace the word **torg** and replace with your own name.
+2. Apply manifests in the folder:
    * `kubectl apply -f ./`
-4. Verify managed resources: 
+3. Verify managed resources: 
    * `kubectl get managed -l crossplane-demo=managed-resources`
-5. Cleanup:
+4. Cleanup:
    * `kubectl delete -f ./`
 
 ## Next

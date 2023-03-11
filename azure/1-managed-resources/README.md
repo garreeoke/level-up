@@ -19,9 +19,13 @@ Go in to each folder below to follow the README for each section.
 * [Composite Resource Definition](2-xrd)
 
 Each folder will create the following:
-* One S3 bucket
-* Ownership preferences on the S3 bucket
-* A new role, policy and role policy attachment
+* Resource Group
+* Virtual Machine
+* Virtual Network
+* Subnet
+* VM Nic
+* Security group & association
+* Kubernetes secret
 
 ## Notes
 Each folder can be run and there should be no naming conflicts.
