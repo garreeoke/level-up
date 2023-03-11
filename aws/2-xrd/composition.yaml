@@ -1,11 +1,11 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
-  name: xs3buckets.demo.upbound.io
+  name: xs3buckets.levelup.upbound.io
 spec:
   writeConnectionSecretsToNamespace: default
   compositeTypeRef:
-    apiVersion: demo.upbound.io/v1alpha1
+    apiVersion: levelup.upbound.io/v1alpha1
     kind: XS3Bucket
   resources:
     - base:

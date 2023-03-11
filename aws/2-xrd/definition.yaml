@@ -1,9 +1,9 @@
 apiVersion: apiextensions.crossplane.io/v1
 kind: CompositeResourceDefinition
 metadata:
-  name: xs3buckets.demo.upbound.io
+  name: xs3buckets.levelup.upbound.io
 spec:
-  group: demo.upbound.io
+  group: levelup.upbound.io
   names:
     kind: XS3Bucket
     plural: xs3buckets
