@@ -1,22 +1,7 @@
-# Level Up - A Hands on Crossplane Workshop for AWS
+# Managed Resources - Azure
 
-## Install AWS Provider
-1. [Check the Upbound marketplace](https://marketplace.upbound.io/providers/upbound/provider-aws/) for the latest version of the provider (ie-v0.26.0).
-2. Update the spec.package in [the provider config](./providers/aws-provider.yaml) with the latest version.
-3. `kubectl -f providers/aws-default-provider.yaml`
-4. `kubectl get providers` and verify INSTALLED and HEALTHY are true.
-
-## Configure Provider
-1. [Create a Kubernetes secret for AWS](https://docs.upbound.io/quickstart/provider-aws/#create-a-kubernetes-secret-for-aws)
-2. Install the provider config `kubectl apply -f providers/aws-provider-cfg.yaml`
-3. `kubectl get providerconfigs` and verify the default provider is created
-
-## Excercises
-
-Go in to each folder below to follow the README for each section.
-
-* [Managed Resources](1-managed-resources)
-* [Composite Resource Definition](2-xrd)
+This folder has each managed resource in a file to be built by itself as a single resource. Installing all of them will
+create the following:
 
 Each folder will create the following:
 * Resource Group
@@ -27,5 +12,20 @@ Each folder will create the following:
 * Security group & association
 * Kubernetes secret
 
-## Notes
-Each folder can be run and there should be no naming conflicts.
+This is a very basic approach to using Managed resources in Crossplane. It uses only the managed resources from the
+provider and not within a composition. It still provides the benefits of using the kubernetes resource model, but does not
+give the simple self-service API of using compositions.
+
+## Steps
+1. In each file in the folder, search and replace the word **CHANGE-ME** and replace with your own name.
+2. To test the provider setup, deploy the resource-group only
+   * `kubectl apply -f ./resource-group.yaml`
+3. Once the resource group is successfully deployed, apply all manifests in the folder:
+    * `kubectl apply -f ./`
+4. Verify managed resources:
+    * `kubectl get managed -l crossplane-demo=levelup-managed-resources`
+5. Cleanup:
+    * `kubectl delete -f ./`
+
+## Next
+* [Build the same resources in a composition](../2-xrd)

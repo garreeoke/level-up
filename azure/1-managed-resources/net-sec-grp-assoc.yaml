@@ -1,12 +1,12 @@
 apiVersion: network.azure.upbound.io/v1beta1
 kind: SubnetNetworkSecurityGroupAssociation
 metadata:
-  name: tm-demo-1-netsecgrp
+  name: levelup-netsecgrp-CHANGE-ME
   labels:
-    demo.tm.io/landingzone: tm-demo-1
+    demo.tm.io/landingzone: levelup-managed-resources
 spec:
   forProvider:
     networkSecurityGroupIdRef:
-      name: tm-demo-1-secgrp
+      name: levelup-secgrp-CHANGE-ME
     subnetIdRef:
-      name: tm-demo-1-subnet
+      name: levelup-subnet-CHANGE-ME

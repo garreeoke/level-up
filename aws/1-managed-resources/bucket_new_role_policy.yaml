@@ -1,10 +1,10 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Policy
 metadata:
-  name: crossplane-demo-torg-s3-crud
+  name: levelup-s3-crud-CHANGE-ME
   labels:
-    role: crossplane-demo-torg-s3-iam-role
-    crossplane-demo: managed-resources
+    role: levelup-s3-iam-role-CHANGE-ME
+    crossplane-demo: levelup-managed-resources
 spec:
   forProvider:
     policy: |-
@@ -22,7 +22,7 @@ spec:
           {
             "Effect":"Allow",
             "Action":["s3:ListBucket"],
-            "Resource":"arn:aws:s3:::crossplane-demo-torg"
+            "Resource":"arn:aws:s3:::levelup-CHANGE-ME"
           },
           {
             "Effect": "Allow",
@@ -31,7 +31,7 @@ spec:
               "s3:GetObject",
               "s3:DeleteObject"
             ],
-            "Resource": "arn:aws:s3:::crossplane-demo-torg/*"
+            "Resource": "arn:aws:s3:::levelup-CHANGE-ME/*"
           }
         ]
       }

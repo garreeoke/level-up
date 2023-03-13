@@ -1,10 +1,10 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Role
 metadata:
-  name: crossplane-demo-torg-s3-iam-role
+  name: levelup-s3-iam-role-CHANGE-ME
   labels:
-    role: crossplane-demo-torg-s3-iam-role
-    crossplane-demo: managed-resources
+    role: levelup-s3-iam-role-CHANGE-ME
+    crossplane-demo: levelup-managed-resources
 spec:
   forProvider:
     assumeRolePolicy: |

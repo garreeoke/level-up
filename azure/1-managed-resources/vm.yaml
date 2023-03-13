@@ -1,25 +1,25 @@
 apiVersion: compute.azure.upbound.io/v1beta1
 kind: LinuxVirtualMachine
 metadata:
-  name: tm-demo-1-vm
+  name: levelup-vm-CHANGE-ME
   labels:
-    demo.tm.io/landingzone: tm-demo-1
+    demo.tm.io/landingzone: levelup-managed-resources
 spec:
   forProvider:
     adminUsername: adminuser
     disablePasswordAuthentication: false
     adminPasswordSecretRef:
-      name: tm-demo-1-secret
+      name: levelup-secret-CHANGE-ME
       namespace: default
       key: pword
     location: West US 3
     networkInterfaceIdsRefs:
-      - name: tm-demo-1-vm-nic
+      - name: levelup-vm-nic-CHANGE-ME
     osDisk:
       - caching: ReadWrite
         storageAccountType: Standard_LRS
     resourceGroupNameRef:
-      name: tm-demo-1-rg
+      name: levelup-rg-CHANGE-ME
     size: Standard_B1s
     sourceImageReference:
       - offer: UbuntuServer

@@ -1,6 +1,6 @@
 # Level Up - A Hands on Crossplane Workshop
 
-Initially created for Level UP workshop in Sydney Australia.
+Initially created for Level UP workshop in Sydney, Australia - 3-15-23
 
 ## Info
 There are three folders in this repo

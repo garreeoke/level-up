@@ -1,9 +1,9 @@
 apiVersion: azure.upbound.io/v1beta1
 kind: ResourceGroup
 metadata:
-  name: tm-demo-1-rg
+  name: levelup-rg-CHANGE-ME
   labels:
-    demo.tm.io/landingzone: tm-demo-1
+    demo.tm.io/landingzone: levelup-managed-resources
 spec:
   forProvider:
     location: West US 3

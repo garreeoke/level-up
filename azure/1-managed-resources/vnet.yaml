@@ -1,13 +1,13 @@
 apiVersion: network.azure.upbound.io/v1beta1
 kind: VirtualNetwork
 metadata:
-  name: tm-demo-1-vnet
+  name: levelup-vnet-CHANGE-ME
   labels:
-    demo.tm.io/landingzone: tm-demo-1
+    demo.tm.io/landingzone: levelup-managed-resources
 spec:
   forProvider:
     resourceGroupNameRef:
-      name: tm-demo-1-rg
+      name: levelup-rg-CHANGE-ME
     location: West US 3
     addressSpace:
       - 192.168.0.0/16

@@ -1,9 +1,9 @@
 apiVersion: demo.tm.io/v1alpha1
 kind: VirtualMachine
 metadata:
-  name: tm-demo-1
+  name: levelup-xrd-CHANGE-ME
   namespace: default
 spec:
-  id: tm-demo-1
+  id: levelup-xrd-CHANGE-ME
   location: "West US 3"
-  resourceGroup: tm-demo-1-rg
+  resourceGroup: levelup-rg-CHANGE-ME

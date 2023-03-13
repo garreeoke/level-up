@@ -1,14 +1,16 @@
 apiVersion: network.azure.upbound.io/v1beta1
 kind: NetworkInterface
 metadata:
-  name: tm-demo-1-vm-nic
+  name: levelup-vm-nic-CHANGE-ME
+  labels:
+    demo.tm.io/landingzone: levelup-managed-resources
 spec:
   forProvider:
     ipConfiguration:
-      - name: tm-demo-1-ip-config
+      - name: levelup-ip-config-CHANGE-ME
         privateIpAddressAllocation: Dynamic
         subnetIdRef:
-          name: tm-demo-1-subnet
+          name: levelup-subnet-CHANGE-ME
     location: West US 3
     resourceGroupNameRef:
-      name: tm-demo-1-rg
+      name: levelup-rg-CHANGE-ME
