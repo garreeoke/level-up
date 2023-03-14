@@ -11,6 +11,12 @@
 2. Install the provider config `kubectl apply -f 3-other/az-provider-cfg.yaml`
 3. `kubectl get providerconfigs` and verify the default provider is created
 
+## Install Kubernetes Provider
+1. `kubectl apply -f 3-other/kubernetes-provider.yaml`
+
+## Install Kubernetes provider config
+1. `kubect apply -f 3-other/kubernetes-provider-cfg.yaml`
+
 ## Excercises
 
 Go in to each folder below to follow the README for each section.
