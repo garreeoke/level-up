@@ -14,10 +14,10 @@ with a single API call.
 1. Create the definition and composition on you cluster: 
    * `kubectl apply -f defintion.yaml`
    * `kubectl apply -f composition.yaml`
-2. Modify the claim file (examples/claim-s3.yaml) and modify **CHANGE-ME** to something else.
+2. Modify the claim file (examples/claim-s3.yaml) and modify **torg** to something else.
 3. Apply the claim:
    * `kubectl apply -f examples/claim-s3.yaml`
 4. Verify managed resources: 
-   * `kubectl get managed -l crossplane.io/claim-name=levelup-xrd-CHANGE-ME`
+   * `kubectl get managed -l crossplane.io/claim-name=levelup-xrd-torg`
 5. Cleanup:
    * `kubectl delete -f examples/claim-s3.yaml`

@@ -1,9 +1,9 @@
 apiVersion: levelup.upbound.io/v1alpha1
 kind: S3Bucket
 metadata:
-  name: levelup-xrd-CHANGE-ME
+  name: levelup-xrd-torg
   namespace: default
 spec:
-  id: levelup-xrd-CHANGE-ME
+  id: levelup-xrd-torg
   region: "us-west-2"
   ownership: "BucketOwnerPreferred"

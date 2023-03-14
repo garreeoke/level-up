@@ -1,11 +1,11 @@
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: Bucket
 metadata:
-  name: levelup-CHANGE-ME
+  name: levelup-torg
   labels:
     crossplane-demo: levelup-managed-resources
 spec:
   forProvider:
     region: us-west-2
     tags:
-      Name: levelup-CHANGE-ME
+      Name: levelup-torg

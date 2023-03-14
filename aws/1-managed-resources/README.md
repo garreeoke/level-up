@@ -12,7 +12,7 @@ provider and not within a composition. It still provides the benefits of using t
 give the simple self-service API of using compositions.
 
 ## Steps
-1. In each file in the folder, search and replace the word **CHANGE-ME** and replace with your own name.
+1. In each file in the folder, search and replace the word **torg** and replace with your own name.
 2. To test the provider setup, deploy the s3 bucket only
    * `kubectl apply -f ./bucket.yaml`
 3. Once the bucket is successfully deployed, apply all manifests in the folder:
