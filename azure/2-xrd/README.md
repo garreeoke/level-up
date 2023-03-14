@@ -15,12 +15,13 @@ This approach shows how the power of Crossplane XRDs combined with compositions 
 with a single API call.
 
 ## Steps
-1. Create the definition and composition on you cluster: 
+1. Change directories to azure/2-xrd
+2. Create the definition and composition on you cluster: 
    * `kubectl apply -f .
-2. Modify the claim file (examples/claim-vm.yaml) and modify **CHANGE-ME** to something else.
-3. Apply the claim:
+3. Modify the claim file (examples/claim-vm.yaml) and modify **CHANGE-ME** to something else.
+4. Apply the claim:
    * `kubectl apply -f examples/claim-vm.yaml`
-4. Verify managed resources: 
+5. Verify managed resources: 
    * `kubectl get managed -l crossplane.io/claim-name=levelup-xrd-CHANGE-ME`
-5. Cleanup:
+6. Cleanup:
    * `kubectl delete -f examples/claim-vm.yaml`

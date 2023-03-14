@@ -17,15 +17,16 @@ provider and not within a composition. It still provides the benefits of using t
 give the simple self-service API of using compositions.
 
 ## Steps
-1. In each file in the folder, search and replace the word **CHANGE-ME** and replace with your own name.
-2. To test the provider setup, deploy the resource-group only
-   * `kubectl apply -f ./resource-group.yaml`
-3. Once the resource group is successfully deployed, apply all manifests in the folder:
-    * `kubectl apply -f ./`
-4. Verify managed resources:
+1. Change directories to azure/1-managed-resources
+2. In each file in the folder, search and replace the word **CHANGE-ME** and replace with your own name.
+3. To test the provider setup, deploy the resource-group only
+   * `kubectl apply -f resource-group.yaml`
+4. Once the resource group is successfully deployed, apply all manifests in the folder:
+    * `kubectl apply -f .`
+5. Verify managed resources:
     * `kubectl get managed -l crossplane-demo=levelup-managed-resources`
-5. Cleanup:
-    * `kubectl delete -f ./`
+6. Cleanup:
+    * `kubectl delete -f .`
 
 ## Next
 * [Build the same resources in a composition](../2-xrd)
