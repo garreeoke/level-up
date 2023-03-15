@@ -23,6 +23,8 @@ spec:
           toFieldPath: metadata.name
         - fromFieldPath: spec.id
           toFieldPath: spec.forProvider.tags.Name
+        - fromFieldPath: spec.owner
+          toFieldPath: spec.forProvider.tags.Owner
     - base:
         apiVersion: s3.aws.upbound.io/v1beta1
         kind: BucketOwnershipControls
