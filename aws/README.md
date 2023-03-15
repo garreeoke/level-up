@@ -2,7 +2,7 @@
 
 ## Install AWS Provider
 1. [Check the Upbound marketplace](https://marketplace.upbound.io/providers/upbound/provider-aws/) for the latest version of the provider (ie-v0.26.0).
-2. Update the spec.package in [the provider config](./providers/aws-provider.yaml) with the latest version.
+2. Update the spec.package in [the provider config](./3-other/aws-provider.yaml) with the latest version.
 3. `kubectl -f providers/aws-provider.yaml`
 4. `kubectl get providers` and verify INSTALLED and HEALTHY are true.
 
