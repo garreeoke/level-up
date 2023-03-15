@@ -7,3 +7,4 @@ spec:
   id: levelup-xrd-CHANGE-ME
   region: "us-west-2"
   ownership: "BucketOwnerPreferred"
+  #owner: "CHANGE-ME"
