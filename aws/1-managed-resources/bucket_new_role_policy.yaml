@@ -1,9 +1,9 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: Policy
 metadata:
-  name: levelup-s3-crud-CHANGE-ME
+  name: levelup-s3-crud-torg
   labels:
-    role: levelup-s3-iam-role-CHANGE-ME
+    role: levelup-s3-iam-role-torg
     crossplane-demo: levelup-managed-resources
 spec:
   forProvider:

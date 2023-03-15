@@ -1,13 +1,13 @@
 apiVersion: iam.aws.upbound.io/v1beta1
 kind: RolePolicyAttachment
 metadata:
-  name: levelup-s3-rpa-CHANGE-ME
+  name: levelup-s3-rpa-torg
   labels:
-    role: levelup-s3-rpa-CHANGE-ME
+    role: levelup-s3-rpa-torg
     crossplane-demo: levelup-managed-resources
 spec:
   forProvider:
     policyArnRef:
-      name: levelup-s3-crud-CHANGE-ME
+      name: levelup-s3-crud-torg
     roleRef:
-      name: levelup-s3-iam-role-CHANGE-ME
+      name: levelup-s3-iam-role-torg

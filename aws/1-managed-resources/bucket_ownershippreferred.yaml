@@ -1,7 +1,7 @@
 apiVersion: s3.aws.upbound.io/v1beta1
 kind: BucketOwnershipControls
 metadata:
-  name: levelup-ownership-CHANGE-ME
+  name: levelup-ownership-torg
   labels:
     crossplane-demo: levelup-managed-resources
 spec:
